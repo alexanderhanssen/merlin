@@ -15,11 +15,11 @@ namespace Merlin.Controllers
             _client = new MyCouchClient("http://db-couchdb.cloudapp.net:5984", "bekk4");
         }
 
-        public async void Add(IList<TrafficMeasurement> trafficMeasurements)
+        public void Add(IList<TrafficMeasurement> trafficMeasurements)
         {
             foreach (var trafficMeasurement in trafficMeasurements)
             {
-                await _client.Documents.PostAsync(JsonConvert.SerializeObject(trafficMeasurement));
+                _client.Documents.PostAsync(JsonConvert.SerializeObject(trafficMeasurement)).Wait();
             }
         }
     }
@@ -41,7 +41,7 @@ namespace Merlin.Controllers
         }
 
         // POST api/<controller>
-        public async void Post([FromBody]IList<TrafficMeasurement> trafficMeasurements)
+        public void Post([FromBody]IList<TrafficMeasurement> trafficMeasurements)
         {
             TrafficCollection.Add(trafficMeasurements);
         }
