@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Merlin.Models;
 using MyCouch;
@@ -25,14 +26,17 @@ namespace Merlin.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody]IEnumerable<TrafficMeasurement> trafficMeasurements)
+        public async void Post([FromBody]IEnumerable<TrafficMeasurement> trafficMeasurements)
         {
             using (var client = new MyCouchClient("http://db-couchdb.cloudapp.net:5984","bekk4"))
             {
-                foreach (var trafficMeasurement in trafficMeasurements)
-                {
-                   client.Documents.PostAsync(JsonConvert.SerializeObject(trafficMeasurement));
-                }
+                //foreach (var trafficMeasurement in trafficMeasurements)
+                //{
+                //   await client.Documents.PostAsync(JsonConvert.SerializeObject(trafficMeasurement));
+                //}
+                Parallel.ForEach(trafficMeasurements,
+                    trafficMeasurement =>
+                        client.Documents.PostAsync(JsonConvert.SerializeObject(trafficMeasurement)).Wait());
             }
         }
 
