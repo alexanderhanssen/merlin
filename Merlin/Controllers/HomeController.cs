@@ -10,5 +10,11 @@ namespace Merlin.Controllers
 
             return View();
         }
+
+        public ActionResult Stasjon()
+        {
+            return View();
+        }
+
     }
 }
