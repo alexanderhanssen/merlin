@@ -28,6 +28,25 @@ namespace Merlin.Controllers
         // POST api/<controller>
         public async void Post([FromBody]IEnumerable<TrafficMeasurement> trafficMeasurements)
         {
+            using (var client = new MyCouchClient("http://db-couchdb.cloudapp.net:5984", "logg"))
+            {
+                using (var stream = Request.Content.ReadAsStreamAsync().Result)
+                {
+                    if (stream.CanSeek)
+                    {
+                        stream.Position = 0;
+                    }
+
+                    client.Documents.PostAsync(JsonConvert.SerializeObject(new
+                    {
+                        melding = "Mottatt",
+                        tid = DateTime.Now,
+                        data = Request.Content.ReadAsStringAsync().Result
+                    })).Wait();
+                }
+              
+            }
+
             using (var client = new MyCouchClient("http://db-couchdb.cloudapp.net:5984","bekk4"))
             {
                 //foreach (var trafficMeasurement in trafficMeasurements)
