@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Merlin.Models;
 using MyCouch;
+using Newtonsoft.Json;
 
 namespace Merlin.Controllers
 {
@@ -24,11 +25,14 @@ namespace Merlin.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody]object data)
+        public void Post([FromBody]IEnumerable<TrafficMeasurement> trafficMeasurements)
         {
-            using (var client = new MyCouchClient("db-couchdb.cloudapp.net:5984","mydb"))
+            using (var client = new MyCouchClient("http://db-couchdb.cloudapp.net:5984","bekk4"))
             {
-                client.Documents.PostAsync(data.ToString());
+                foreach (var trafficMeasurement in trafficMeasurements)
+                {
+                   client.Documents.PostAsync(JsonConvert.SerializeObject(trafficMeasurement));
+                }
             }
         }
 
