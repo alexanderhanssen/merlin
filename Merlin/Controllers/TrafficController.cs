@@ -6,8 +6,28 @@ using Newtonsoft.Json;
 
 namespace Merlin.Controllers
 {
+    public class TrafficCollection
+    {
+        private readonly MyCouchClient _client;
+
+        public TrafficCollection()
+        {
+            _client = new MyCouchClient("http://db-couchdb.cloudapp.net:5984", "bekk4");
+        }
+
+        public async void Add(IList<TrafficMeasurement> trafficMeasurements)
+        {
+            foreach (var trafficMeasurement in trafficMeasurements)
+            {
+                await _client.Documents.PostAsync(JsonConvert.SerializeObject(trafficMeasurement));
+            }
+        }
+    }
+
     public class TrafficController : ApiController
     {
+        public static TrafficCollection TrafficCollection;
+
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
@@ -23,13 +43,7 @@ namespace Merlin.Controllers
         // POST api/<controller>
         public async void Post([FromBody]IList<TrafficMeasurement> trafficMeasurements)
         {
-            using (var client = new MyCouchClient("http://db-couchdb.cloudapp.net:5984","bekk4"))
-            {
-                foreach (var trafficMeasurement in trafficMeasurements)
-                {
-                   await client.Documents.PostAsync(JsonConvert.SerializeObject(trafficMeasurement));
-                }
-            }
+            TrafficCollection.Add(trafficMeasurements);
         }
 
         // PUT api/<controller>/5
@@ -40,6 +54,11 @@ namespace Merlin.Controllers
         // DELETE api/<controller>/5
         public void Delete(int id)
         {
+        }
+
+        private MyCouchClient Save()
+        {
+            return new MyCouchClient("http://db-couchdb.cloudapp.net:5984", "bekk4");
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Merlin.Controllers;
 
 namespace Merlin
 {
@@ -9,6 +10,7 @@ namespace Merlin
     {
         protected void Application_Start()
         {
+            TrafficController.TrafficCollection = new TrafficCollection();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
