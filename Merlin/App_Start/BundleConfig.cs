@@ -20,7 +20,7 @@ namespace Merlin
                       "~/Scripts/respond.js",
                       "~/Scripts/select2.min.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/Styles/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/css/select2.min.css"));
