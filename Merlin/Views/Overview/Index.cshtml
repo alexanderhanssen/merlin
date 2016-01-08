@@ -3,6 +3,7 @@
 
 <div class="jumbotron">
     <h1>MERLIN</h1>
-    <p class="lead">@Model.TotalRows</p>
+    <p class="lead"></p>
+    @Html.DropDownListFor(x => x.MeasurementPoints, new SelectList(Model.MeasurementPoints))
     <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
