@@ -2,12 +2,18 @@
 
 
 <div class="jumbotron">
-    <h1>MERLIN</h1>
+    <h1>Måledata for trafikk</h1>
     <p class="lead"></p>
-    @Html.DropDownListFor(x => x.MeasurementPoints, new SelectList(Model.MeasurementPoints), new { id = "measurePoint", @class = "measurePoints" })
+    @Html.LabelFor(x => x.MeasurementPoints)
+    <br/>
+    @Html.DropDownListFor(x => x.MeasurementPoints, new SelectList(Model.MeasurementPoints), new { id = "measurePoint", @class = "measurePoints", style="width: 30%"})
+    <br />
+    @Html.LabelFor(x => x.MinuteIntervals)
+    <br />
     @Html.DropDownListFor(x => x.MinuteIntervals, new SelectList(Model.MinuteIntervals), new { id = "minuteInterval", @class = "test" })
-    <p>
-        <a class="btn btn-primary btn-lg" id="fetcher">Fetch</a>
+    <br />
+    <p style="margin: 20px 0 20px 0">
+        <a class="btn btn-primary btn-lg" id="fetcher">Hent</a>
     </p>
     <div id="dvCategoryResults">
     </div>
