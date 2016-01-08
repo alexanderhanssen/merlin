@@ -1,0 +1,28 @@
+﻿@model Merlin.Controllers.TrafficQueryViewModel
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfCars)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AverageSpeed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MeasurePoint)
+        </th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.NumberOfCars)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.AverageSpeed)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.MeasurePoint)
+        </td>
+    </tr>
+
+</table>

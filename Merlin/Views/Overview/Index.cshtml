@@ -4,6 +4,25 @@
 <div class="jumbotron">
     <h1>MERLIN</h1>
     <p class="lead"></p>
-    @Html.DropDownListFor(x => x.MeasurementPoints, new SelectList(Model.MeasurementPoints))
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    @Html.DropDownListFor(x => x.MeasurementPoints, new SelectList(Model.MeasurementPoints), new { id = "measurePoint", @class = "test" })
+    @Html.DropDownListFor(x => x.MinuteIntervals, new SelectList(Model.MinuteIntervals), new { id = "minuteInterval", @class = "test" })
+    <p>
+        <a class="btn btn-primary btn-lg" id="fetcher">Fetch</a>
+    </p>
+    <div id="dvCategoryResults">
+    </div>
 </div>
+
+@section Scripts{
+   <script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#fetcher").click(function () {
+            var minuteInterval = $("#minuteInterval").val();
+            var measurePoint = $("#measurePoint").val();
+            $("#dvCategoryResults").load('@(Url.Action("GetResult","Overview",null, Request.Url.Scheme))?measurePoint='+ measurePoint + '&minutesAgo=' + minuteInterval);
+        });
+    });
+</script>  
+}
+
