@@ -22,7 +22,8 @@ namespace Merlin.Controllers
             {
                 try
                 {
-                    _client.Documents.PostAsync(JsonConvert.SerializeObject(trafficMeasurement)).Wait();
+                    var result = _client.Documents.PostAsync(JsonConvert.SerializeObject(trafficMeasurement)).Result;
+                    if(!result.IsSuccess) throw new Exception();
                 }
                 catch (Exception)
                 {
