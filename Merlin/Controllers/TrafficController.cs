@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using Merlin.Models;
 using MyCouch;
@@ -8,7 +9,7 @@ namespace Merlin.Controllers
 {
     public class TrafficCollection
     {
-        private readonly MyCouchClient _client;
+        private MyCouchClient _client;
 
         public TrafficCollection()
         {
@@ -19,7 +20,15 @@ namespace Merlin.Controllers
         {
             foreach (var trafficMeasurement in trafficMeasurements)
             {
-                _client.Documents.PostAsync(JsonConvert.SerializeObject(trafficMeasurement)).Wait();
+                try
+                {
+                    _client.Documents.PostAsync(JsonConvert.SerializeObject(trafficMeasurement)).Wait();
+                }
+                catch (Exception)
+                {
+                    _client.Dispose();
+                    _client = new MyCouchClient("http://db-couchdb.cloudapp.net:5984", "bekk4");
+                }
             }
         }
     }
