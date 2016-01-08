@@ -19,7 +19,7 @@ namespace Merlin.Controllers
             var viewModel = new OverviewViewModel();
             using (var client = new MyCouchClient("http://db-couchdb.cloudapp.net:5984", "bekk4"))
             {
-                var query = new QueryViewRequest("test", "measurepoints").Configure(x => x.Group(true).Limit(1000));
+                var query = new QueryViewRequest("test", "measurepoints").Configure(x => x.Group(true));
                 var result = await client.Views.QueryAsync(query);
                 viewModel.MeasurementPoints = result.Rows.Select(x => x.Key);
             }

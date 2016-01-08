@@ -4,7 +4,7 @@
 <div class="jumbotron">
     <h1>MERLIN</h1>
     <p class="lead"></p>
-    @Html.DropDownListFor(x => x.MeasurementPoints, new SelectList(Model.MeasurementPoints), new { id = "measurePoint", @class = "test" })
+    @Html.DropDownListFor(x => x.MeasurementPoints, new SelectList(Model.MeasurementPoints), new { id = "measurePoint", @class = "measurePoints" })
     @Html.DropDownListFor(x => x.MinuteIntervals, new SelectList(Model.MinuteIntervals), new { id = "minuteInterval", @class = "test" })
     <p>
         <a class="btn btn-primary btn-lg" id="fetcher">Fetch</a>
@@ -16,7 +16,8 @@
 @section Scripts{
    <script type="text/javascript">
 
-    $(document).ready(function () {
+       $(document).ready(function () {
+           $(".measurePoints").select2();
         $("#fetcher").click(function () {
             var minuteInterval = $("#minuteInterval").val();
             var measurePoint = $("#measurePoint").val();
